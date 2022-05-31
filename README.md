@@ -1,5 +1,5 @@
 
-```bash
+``` bash
 >> node test.js
 Perry the Platypus!!
 Mocking is fun
