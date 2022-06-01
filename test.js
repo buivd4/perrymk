@@ -1,4 +1,4 @@
-import {mock,times,calledWith} from './src/builder.js';
+import {Watcher} from './src/watcher.js';
 
 class Perry{
     constructor(cloth){
@@ -17,22 +17,28 @@ class Perry{
 }
 
 let perry=new Perry()
-console.log(perry.soundWhenMeet("doofenshmirtz"))
+console.log("Output:",perry.soundWhenMeet("doofenshmirtz"))
+
+console.log("- Single mock ----------------------")
+let perryWatcher = new Watcher(Perry);
+perry = perryWatcher.when("soundWhenMeet").thenReturn("Mocking is fun, right?")
+console.log("Ouput:",perry.soundWhenMeet("doofenshmirtz"))
+console.log("Called times:", perryWatcher.times("soundWhenMeet"))
+console.log("------------------------------------\n")
 
 
-let mockedPerry=mock(perry).when("soundWhenMeet").thenReturn("Mocking is fun");
-console.log(mockedPerry.soundWhenMeet("doofenshmirtz"))
+console.log("- Multiple mock --------------------")
+perryWatcher = new Watcher(Perry);
+perry = perryWatcher.when("soundWhenMeet").withArgs("phineas").thenReturn("Oh there you are Perry!..")
+perry = perryWatcher.when("soundWhenMeet").withArgs("doofenshmirtz").thenReturn("Doofenshmirtz Evil Incorporated 🎵")
+console.log("Ouput when meet Doofenshmirtz:",perry.soundWhenMeet("doofenshmirtz"))
+console.log("Ouput when meet Phineas:",perry.soundWhenMeet("phineas"))
+console.log("Ouput when meet Ferb:",perry.soundWhenMeet("ferb"))
+console.log("Ouput when meet Ferb:",perry.soundWhenMeet("ferb"))
 
-let mockedPerryWithArgs = mock(perry).whenWithArgs("soundWhenMeet",["doofenshmirtz"]).thenReturn("Peerryyy..")
-console.log(mockedPerryWithArgs.soundWhenMeet("doofenshmirtz"))
+console.log("Total called times:", perryWatcher.times("soundWhenMeet"))
+console.log("Called times when meet Doofenshmirtz:", perryWatcher.watch("soundWhenMeet").times("doofenshmirtz"))
+console.log("Called times when meet Phineas:", perryWatcher.watch("soundWhenMeet").times("phineas"))
+console.log("Called times when meet Ferb:", perryWatcher.watch("soundWhenMeet").times("ferb"))
 
-
-let mockedPerryM=mock(perry);
-mockedPerryM.whenWithArgs("soundWhenMeet",["doofenshmirtz"]).thenReturn("Mock1..")
-mockedPerryM.whenWithArgs("soundWhenMeet",["phineas"]).thenReturn("Mock2..")
-let mockedMultiCase= mockedPerryM.mock;
-console.log(mockedMultiCase.soundWhenMeet("doofenshmirtz"))
-console.log(mockedMultiCase.soundWhenMeet("phineas"))
-console.log(times(mockedMultiCase,"soundWhenMeet"))
-console.log(calledWith(mockedMultiCase,"soundWhenMeet",['phineas']))
-console.log(calledWith(mockedMultiCase,"soundWhenMeet",['ferb']))
+console.log("------------------------------------\n")

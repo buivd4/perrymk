@@ -1,12 +1,20 @@
 
-```bash
->> node test.js
-Perry the Platypus!!
-Mocking is fun
-Peerryyy..
-Mock1..
-Mock2.. 
-2
-true
-false
+``` bash
+❯ node test.js
+Output: Perry the Platypus!!
+- Single mock ----------------------
+Ouput: Mocking is fun, right?
+Called times: 1
+------------------------------------
+
+- Multiple mock --------------------
+Ouput when meet Doofenshmirtz: Doofenshmirtz Evil Incorporated 🎵
+Ouput when meet Phineas: Oh there you are Perry!..
+Ouput when meet Ferb: undefined
+Ouput when meet Ferb: undefined
+Total called times: 4
+Called times when meet Doofenshmirtz: 1
+Called times when meet Phineas: 1
+Called times when meet Ferb: 2
+------------------------------------
 ```
