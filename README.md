@@ -1,52 +1,77 @@
+# PerryMK
 
-js test:
-``` js
-let perry=new Perry()
-console.log("Output:",perry.soundWhenMeet("doofenshmirtz"))
+<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fseeklogo.com%2Fimages%2FP%2Fperry-the-platypus-logo-BC87DE7C19-seeklogo.com.png&f=1&nofb=1" alt="perry" width="70"/>
 
-console.log("- Single mock ----------------------")
-let perryWatcher = new Watcher(Perry);
+**Yet another JS mock library**
+
+
+Are you bored with ```jest```? Try ```PerryMK``` to make your life harder.
+
+Let me first introduce my old friend, Perry:
+
+```js
+class Perry{
+    constructor(cloth){
+        this.cloth=cloth;
+    }
+    soundWhenMeet(charactor){
+        switch(charactor){
+            case "doofenshmirtz":
+                return "Perry the Platypus!!"
+            case "phineas":
+                return "There you are Perry"
+            case "ferb":
+                return "kakkkk kakkkk"
+        }
+    }
+}
+```
+
+He is cute, right? 
+
+
+## Core features
+Inspired by Mockito, PerryMK is focus on easy-to-use property.
+
+### Stub
+
+Simple stub
+
+```js
+let perryWatcher = new Mock(Perry);
 perry = perryWatcher.when("soundWhenMeet").thenReturn("Mocking is fun, right?")
-console.log("Ouput:",perry.soundWhenMeet("doofenshmirtz"))
-console.log("Called times:", perryWatcher.times("soundWhenMeet"))
-console.log("------------------------------------\n")
+```
 
+Stub with expected arguments using ```ArgumentMatcher``` (*I said! This is a Mockito-copy-cat..*)
 
-console.log("- Multiple mock --------------------")
-perryWatcher = new Watcher(Perry);
-perry = perryWatcher.when("soundWhenMeet").withArgs("phineas").thenReturn("Oh there you are Perry!..")
-perry = perryWatcher.when("soundWhenMeet").withArgs("doofenshmirtz").thenReturn("Doofenshmirtz Evil Incorporated 🎵")
-console.log("Ouput when meet Doofenshmirtz:",perry.soundWhenMeet("doofenshmirtz"))
-console.log("Ouput when meet Phineas:",perry.soundWhenMeet("phineas"))
-console.log("Ouput when meet Ferb:",perry.soundWhenMeet("ferb"))
-console.log("Ouput when meet Ferb:",perry.soundWhenMeet("ferb"))
-
-console.log("Total called times:", perryWatcher.times("soundWhenMeet"))
-console.log("Called times when meet Doofenshmirtz:", perryWatcher.watch("soundWhenMeet").times("doofenshmirtz"))
-console.log("Called times when meet Phineas:", perryWatcher.watch("soundWhenMeet").times("phineas"))
-console.log("Called times when meet Ferb:", perryWatcher.watch("soundWhenMeet").times("ferb"))
-
-console.log("------------------------------------\n")
+```js
+perry = perryWatcher.when("soundWhenMeet")
+                    .withArgs(eq("phineas"))
+                    .thenReturn("Oh there you are Perry!..")
+perry = perryWatcher.when("soundWhenMeet")
+                    .withArgs(eq("doofenshmirtz"))
+                    .thenReturn("Doofenshmirtz Evil Incorporated 🎵")
+perry = perryWatcher.when("soundWhenMeet")
+                    .withArgs(any("string"))
+                    .thenReturn("🎵")
 ```
 
 
-output:
-``` bash
-❯ node test.js
-Output: Perry the Platypus!!
-- Single mock ----------------------
-Ouput: Mocking is fun, right?
-Called times: 1
-------------------------------------
+### Mock
+Simple mock
 
-- Multiple mock --------------------
-Ouput when meet Doofenshmirtz: Doofenshmirtz Evil Incorporated 🎵
-Ouput when meet Phineas: Oh there you are Perry!..
-Ouput when meet Ferb: undefined
-Ouput when meet Ferb: undefined
-Total called times: 4
-Called times when meet Doofenshmirtz: 1
-Called times when meet Phineas: 1
-Called times when meet Ferb: 2
-------------------------------------
+```js
+console.log("Total called times:", perryWatcher.verify("soundWhenMeet").times())
 ```
+
+Mock with expected arguments
+
+```js
+console.log("Called times when meet Doofenshmirtz:", perryWatcher.verify("soundWhenMeet").withArgs(eq("doofenshmirtz")).times())
+console.log("Called times when meet Phineas:", perryWatcher.verify("soundWhenMeet").withArgs(eq("phineas")).times())
+console.log("Called times when meet Ferb:", perryWatcher.verify("soundWhenMeet").withArgs(eq("ferb")).times())
+```
+
+## Credit
+* Mockito
+* 

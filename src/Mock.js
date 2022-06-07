@@ -1,6 +1,5 @@
-import { Matcher } from "./matcher.js";
-import { Any } from './type.js';
-
+import { MatchChecker } from "./MatchChecker.js";
+import {Assert} from "./Assert.js";
 function call_logging(watcher, fnName, fnArgs){
     if (watcher.callLog[fnName]===undefined){
         watcher.callLog[fnName]=new Array();
@@ -8,7 +7,7 @@ function call_logging(watcher, fnName, fnArgs){
     watcher.callLog[fnName].push(fnArgs);
 }
 
-export class Watcher{
+export class Mock{
     constructor(clazz){
         this.clazz = clazz;
         this.callLog = new Object();
@@ -17,7 +16,7 @@ export class Watcher{
         this.whenPointers= new Object();
     }
     inject(fnName){
-        this.matchers[fnName]=new Matcher();
+        this.matchers[fnName]=new MatchChecker();
         this.mock[fnName]=(...args)=>{
             call_logging(this, fnName, args);
             return this.matchers[fnName].lookup(args);
@@ -30,29 +29,8 @@ export class Watcher{
         }
         return this.whenPointers[fnName];
     }
-    watch(fnName){
-        return new Assertion(this.callLog[fnName]);
-    }
-    times(fnName){
-        return this.watch(fnName).times();
-    }
-}
-
-class Assertion{
-    constructor(callLog){
-        this.callLog=callLog
-    }
-    times(...args){
-        if (args.length===0){
-            return this.callLog.length
-        }
-        let count=0
-        for(let i=0;i<this.callLog.length;i++){
-            if (Matcher.isMatch(args, this.callLog[i])){
-                count++;
-            }
-        }
-        return count;
+    verify(fnName){
+        return new Assert(this.callLog[fnName]);
     }
 }
 
@@ -61,7 +39,7 @@ class WhenPointer{
         this.matchers=matchers;
         this.mock=mock;
         this.fnName=fnName;
-        this.fnArgs=new Any();
+        this.fnArgs=undefined;
     }
     withArgs(...args){
         this.fnArgs=args;
