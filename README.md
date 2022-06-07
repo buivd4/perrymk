@@ -4,9 +4,13 @@
 
 **Yet another JS mock library**
 
-
 Are you bored with ```jest```? Try ```PerryMK``` to make your life harder.
 
+**CURRENT VERSION: 0.1.0**
+
+# How to install
+
+# How to use PerryMK
 Let me first introduce my old friend, Perry:
 
 ```js
@@ -67,11 +71,16 @@ console.log("Total called times:", perryWatcher.verify("soundWhenMeet").times())
 Mock with expected arguments
 
 ```js
-console.log("Called times when meet Doofenshmirtz:", perryWatcher.verify("soundWhenMeet").withArgs(eq("doofenshmirtz")).times())
-console.log("Called times when meet Phineas:", perryWatcher.verify("soundWhenMeet").withArgs(eq("phineas")).times())
-console.log("Called times when meet Ferb:", perryWatcher.verify("soundWhenMeet").withArgs(eq("ferb")).times())
+console.log("Called times when meet Doofenshmirtz:", perryWatcher.verify("soundWhenMeet")
+                                                                .withArgs(eq("doofenshmirtz"))
+                                                                .times())
+console.log("Called times when meet Phineas:", perryWatcher.verify("soundWhenMeet")
+                                                            .withArgs(eq("phineas"))
+                                                            .times())
+console.log("Called times when meet Ferb:", perryWatcher.verify("soundWhenMeet")
+                                                        .withArgs(eq("ferb"))
+                                                        .times())
 ```
 
 ## Credit
 * Mockito
-* 
