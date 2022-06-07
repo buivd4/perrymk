@@ -6,9 +6,14 @@
 
 Are you bored with ```jest```? Try ```PerryMK``` to make your life harder.
 
-**CURRENT VERSION: 0.1.0**
+**CURRENT VERSION: 0.1.2**
 
 # How to install
+
+Install from npm
+```js
+npm install perrymk
+```
 
 # How to use PerryMK
 Let me first introduce my old friend, Perry:
