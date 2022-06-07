@@ -1,4 +1,4 @@
-import {Mock,ArgumentMatcher} from 'perrymk';
+import {Mock} from 'perrymk';
 
 let eq = ArgumentMatcher.eq;
 let any = ArgumentMatcher.any;
